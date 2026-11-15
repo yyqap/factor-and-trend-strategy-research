@@ -2,6 +2,8 @@
 
 The projects began as internship prototypes. The original equity task used logistic regression, and the original allocation task implemented multi-asset trend and reversal rules. Subsequent independent research added model comparison, stricter time validation, portfolio and cost comparisons, risk attribution, historical industry diagnostics, and native-instrument accounting.
 
+For Task 2 specifically, the internship contribution was a research-report-based Python rule implementation. The native-data backtest and its June 2020–August 2023 performance figures were completed in the November 2026 follow-up. Those dates describe the simulated investment window, not when the work was performed. Fixed rules and chronological execution alone do not establish an untouched out-of-sample evaluation.
+
 The public package is a portable reimplementation of the documented research conventions. It is not a claim that every extension was completed during the original internship. The unchanged earlier scripts remain in `legacy/` so their outputs are not confused with the corrected work.
 
 ## What can be reproduced here

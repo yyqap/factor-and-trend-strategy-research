@@ -24,6 +24,8 @@ The LightGBM model's mean monthly Rank IC was **0.1399 across 49 historical eval
 
 ### Task 2 — Multi-asset trend allocation
 
+The original internship task implemented rules from a research report as a Python prototype. The native-data historical validation below is a separate November 2026 follow-up. It is a fixed-rule historical study, rather than a claim of a fresh out-of-sample test or exact replication of the reference index.
+
 **Question:** how can trend and early-recovery rules be translated into risk-aware allocations with causal timing and consistent native-instrument accounting?
 
 - Sixteen logical equity, government-bond and commodity exposures, implemented through twenty funded-index or futures legs in the native research run.

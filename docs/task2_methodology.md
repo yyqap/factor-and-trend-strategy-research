@@ -5,6 +5,11 @@ engine. It is a GMAT-style research prototype, not a replication of an official
 index or a claim to know its undisclosed implementation. There is one declared
 configuration, not an optimizer selected using the displayed return.
 
+The original internship task implemented the research report's rules. The
+native historical backtest was completed separately in November 2026. Its
+2020–2023 return window is an investment simulation period, not the work dates,
+and this fixed-rule reconstruction is not presented as an untouched OOS test.
+
 ## What the public demo does
 
 ```bash
