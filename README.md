@@ -1,97 +1,86 @@
 # Factor and Trend Strategy Research
 
-Two systematic-investing research projects covering cross-sectional A-share stock ranking and multi-asset trend allocation. The emphasis is on time-based validation, portfolio construction, risk diagnostics and explicit return accounting.
+Python research pipelines for cross-sectional stock ranking and multi-asset trend allocation. The projects connect data validation, chronological experiments, statistical evidence and portfolio implementation.
 
-The repository extends earlier internship prototypes with subsequent independent research. It includes portable code, synthetic demonstrations, tests and aggregate results from the evaluated historical runs. See [research scope and chronology](docs/research_scope.md) for the distinction between the original tasks and their extensions.
+[Full results and backtests](results/README.md) · [Research design](docs/research_scope.md) · [Data and reproducibility](docs/data_access.md)
 
-## Research projects
+## Task 1 — Multi-factor A-share stock selection
 
-### Task 1 — Factor-based A-share stock selection
+**Research question:** can fundamental and price-volume factors rank next-period stock returns, and does that association remain after accounting for industry effects?
 
-**Question:** can fundamental and price-volume signals rank next-period stock returns, and how does that ranking translate into a portfolio after costs?
+The panel contains **70 candidate factors, 162 signal months, 319,441 stock-month observations and 3,540 stocks across the history**. Ridge regression predicts continuous benchmark-relative returns; Logistic and LightGBM classifiers learn the strongest and weakest monthly return tails.
 
-- Original 2005–2018 monthly panel: 70 candidate factors, about 320,000 stock-month observations and 3,540 distinct stocks across the full history.
-- Ridge regression compared with L2 logistic regression and LightGBM classifiers. Classifiers learn the monthly top/bottom 30% tails; Ridge uses continuous benchmark-relative returns.
-- Training-window preprocessing, correlation screening, expanding-window validation and annual expanding refits.
-- Monthly long-only portfolios, stock-count and weighting comparisons, turnover-cost sensitivity, market-state overlays and China Fama–French attribution.
-- Published-as-of historical CSRC industry classifications for a separate industry-adjusted ranking check.
+The research workflow is:
 
-The LightGBM model's mean monthly Rank IC was **0.1399 across 49 historical evaluation months**. On the identical classified sample, its raw IC was **0.1402**, versus **0.1399 after demeaning both scores and forward returns by industry**. These are ranking correlations, not prediction accuracy or portfolio returns.
+1. Validate stock–month keys, eligibility, missing values and forward-return alignment.
+2. Fit imputation, scaling and correlation-based feature screening inside each training window.
+3. Compare 18 model configurations over **66 expanding-window validation months** using full-universe monthly Rank IC.
+4. Evaluate frozen hyperparameters with annual expanding refits over **49 later historical months**.
+5. Check industry-adjusted ranking, statistical uncertainty, portfolio concentration, turnover costs and factor exposures.
 
-![Task 1 model comparison](docs/figures/task1_model_comparison.png)
+**Main evidence:** LightGBM was selected by development-validation Rank IC. Its mean evaluation Rank IC was **0.1399**. On the identical industry-classified sample, raw IC was **0.1402**, compared with **0.1399 after industry adjustment**. This measures ranking association; a tail-trained classifier supplies a ranking score, rather than a calibrated unconditional event probability.
 
-[Methodology](docs/task1_methodology.md) · [Historical results](results/task1/) · [Portfolio tradeoffs](docs/figures/task1_portfolio_tradeoffs.png)
+![Historical-data ranking evidence: model validation and the matched-sample industry check](docs/figures/task1_ranking_evidence.png)
 
-### Task 2 — Multi-asset trend allocation
+The portfolio analysis compares stock counts, weights and market-state rules. Stronger full-universe ranking did not consistently produce lower concentrated-portfolio risk. [Complete portfolio returns, drawdowns, costs and attribution](results/README.md#task-1--stock-ranking-and-portfolio-results) are retained with the method definitions.
 
-The original internship task implemented rules from a research report as a Python prototype. The native-data historical validation below is a separate November 2026 follow-up. It is a fixed-rule historical study, rather than a claim of a fresh out-of-sample test or exact replication of the reference index.
+[Task 1 methodology](docs/task1_methodology.md) · [Model comparison data](results/task1/model_comparison.csv) · [Code](src/factor_trend_research/task1/)
 
-**Question:** how can trend and early-recovery rules be translated into risk-aware allocations with causal timing and consistent native-instrument accounting?
+## Task 2 — Multi-asset trend allocation
 
-- Sixteen logical equity, government-bond and commodity exposures, implemented through twenty funded-index or futures legs in the native research run.
-- Trend rankings, a moving-average recovery rule, volatility-aware sizing, asset caps and staggered monthly execution.
-- Separate funded principal and futures variation margin, explicit contract rolls, FX marks, turnover costs and management-fee accrual.
-- A synthetic native-instrument demonstration that exercises the engine without distributing the historical source quotes.
+**Research question:** how can research-report-based trend and recovery rules become a consistent allocation, execution and P&L process?
 
-The evaluated native run executed from **2020-06-04 to 2023-08-18**, after the required history became available. It reported net CAGR **2.54%**, daily Sharpe **0.938** under its stated zero-RF convention, and daily NAV maximum drawdown **3.44%**. Its low gross exposure and cash assumptions matter when interpreting these results.
+The strategy covers **16 logical exposures and 20 underlying legs** across equity indices, government-bond futures and commodities. Four trend indicators rank assets for Top11 selection. Volatility-based sizing, asset caps and an **MA5-confirmed recovery rule** shape target weights, followed by staggered execution and portfolio volatility controls.
 
-![Task 2 native historical NAV](docs/figures/task2_native_nav.png)
+The implementation separates funded-index principal from futures variation margin, handles contract rolls and FX marks, and reconciles trading costs, management fees, cash and NAV.
 
-[Methodology](docs/task2_methodology.md) · [Historical results](results/task2/)
+![Multi-asset research workflow: signals, risk controls, execution and native accounting](docs/figures/task2_research_workflow.png)
 
-## Quick start
+[Task 2 methodology](docs/task2_methodology.md) · [Full net backtest, NAV and drawdown](results/README.md#task-2--native-multi-asset-backtest) · [Code](src/factor_trend_research/task2/)
 
-Python 3.11 or later is required; the CI workflow uses Python 3.12.
+## Read and reproduce the evidence
+
+**The statistical figure above and the backtest charts on the results page use historical research outputs.** They are hypothetical backtests, not live investment performance. The workflow diagram describes the implemented process.
+
+The [results page](results/README.md) includes complete metrics, NAV and drawdown figures, portfolio comparisons, costs, factor attribution and limitations. Exact data windows and chronology are documented in the methods and configurations. The evaluated history has been examined repeatedly and is not a fresh untouched holdout.
+
+Python 3.11 or later is supported. Install the tested dependencies, regenerate the figures from the public aggregates and declared configuration, and check the research outputs:
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install -e ".[research,dev]"
-
-# Both commands generate explicitly synthetic demonstrations.
-python -m factor_trend_research.task1 --demo --output outputs/task1_demo
-python -m factor_trend_research.task2 --demo --output outputs/task2_demo
-
+python -m pip install -r requirements-tested.txt -e ".[research,dev]"
+python docs/figures/regenerate.py
 python -m pytest
 ```
 
-On Windows, activate the environment with `.venv\Scripts\activate` instead. LightGBM is optional for the base installation and is included in the `research` extra; an unavailable requested model is not silently replaced with a different estimator.
+On Windows, activate with `.venv\Scripts\activate`. LightGBM is optional in the base package; macOS also requires its OpenMP runtime. See the [installation guidance](docs/task1_methodology.md#run-it).
 
-On macOS, LightGBM also needs an OpenMP runtime; see the [platform guidance](docs/task1_methodology.md#run-it). The directly tested package versions are recorded in [requirements-tested.txt](requirements-tested.txt). These versions describe this public software release, rather than asserting that every earlier experiment used identical dependencies.
+### Research with local inputs
 
-## Local data and historical results
-
-Raw equity factors, stock-level predictions and holdings, source market quotes, vendor files and internal reference documents are not bundled. [Data access](docs/data_access.md) and the [data dictionary](docs/data_dictionary.md) describe the required local inputs and external sources.
+The [data guide](docs/data_access.md) defines the local factor-panel, matched benchmark and native-instrument interfaces. Reproducing the historical training and backtests requires the same source inputs and declared conventions. Original panels, quotes, stock-level predictions and holdings, vendor files and internal documents are excluded from this repository.
 
 ```bash
 python -m factor_trend_research.task1 --help
 python -m factor_trend_research.task2 --help
 ```
 
-The files under `results/` are aggregate outputs from the evaluated historical research. Running a synthetic demo writes new outputs under `outputs/`; it does not reproduce or overwrite those historical results. Read the [results guide](docs/results_guide.md) before comparing return, drawdown and attribution figures.
+### Optional synthetic software checks
 
-`tests/test_published_results.py` independently reconciles the checked-in NAVs, returns, costs, catalog joins and metric identities without loading any underlying stock-level or market data. The method documents distinguish directly executable workflows from the earlier experiments represented by the aggregate catalog.
+These commands generate separate artificial inputs to exercise the software when the private historical data is unavailable. Their output is **not used in the published historical charts or performance metrics**.
 
-Same-input historical correspondence checks are recorded for [Task 1](results/task1/portable_code_verification.json) and [Task 2](results/task2/portable_code_verification.json). They bind the tested public modules to their source hashes and describe the exact comparison scope; the underlying historical inputs remain private.
-
-The [publication manifest](results/manifest.json) records the checksums of the aggregate exports, configurations and figures in this release.
-
-## Repository structure
-
-```text
-src/factor_trend_research/
-  task1/                 Equity data, models, validation and portfolio diagnostics
-  task2/                 Trend rules, native instruments and portfolio accounting
-configs/                 Declared research settings
-tests/                   Timing, data alignment, selection and accounting checks
-docs/                    Methods, data definitions, interpretation and figures
-results/task1/           Aggregate equity research outputs
-results/task2/           Aggregate native trend-research outputs
-legacy/                  Earlier scripts retained as historical references
+```bash
+python -m factor_trend_research.task1 --demo --output outputs/task1_demo
+python -m factor_trend_research.task2 --demo --output outputs/task2_demo
 ```
 
-## Interpretation
+Local outputs remain under the ignored `outputs/` directory. The same-input historical correspondence records for [Task 1](results/task1/portable_code_verification.json) and [Task 2](results/task2/portable_code_verification.json), and the [publication manifest](results/manifest.json), connect the public implementation with the checked research outputs.
 
-Task 1 absolute NAV is reconstructed from the supplied arithmetic benchmark-relative return field and CSI300 returns over the same holding dates. Its drawdown is observed at monthly holding boundaries, and its transaction costs are a target-turnover approximation. The historical evaluation period has been inspected repeatedly, so it is not a fresh untouched holdout.
+## Repository map
 
-Task 2 uses research conventions for cash, collateral, fractional quantities, rolls, calendars and FX observation timing. It is not a live execution record. Its daily drawdown cannot be compared directly with Task 1's monthly-observation drawdown, and the two Sharpe ratios use different sampling and risk-free conventions.
+- `src/factor_trend_research/`: model, validation, portfolio, signal and accounting modules.
+- `configs/`: declared model and strategy settings.
+- `results/`: complete aggregate historical results and verification records.
+- `docs/`: methodology, data definitions and reproducible figures.
+- `tests/`: timing, matching, selection, accounting and published-result checks.
+- `legacy/`: archived implementation versions.

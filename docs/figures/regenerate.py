@@ -1,15 +1,17 @@
-"""Regenerate publication figures from the checked-in aggregate CSVs only.
+"""Regenerate figures from public aggregate results and declared configuration.
 
 Run from the repository root with matplotlib and pandas installed:
     python docs/figures/regenerate.py
 """
 from pathlib import Path
 import os
+import json
 os.environ.setdefault('MPLCONFIGDIR', '/tmp/factor-trend-matplotlib')
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 import pandas as pd
 import numpy as np
 
@@ -80,4 +82,78 @@ fig.text(.08,.025,'Source: checked-in strategy-only aggregate NAV; initial obser
     'No exact daily reference-index NAV is available. This is a prototype with explicit roll / basket / FX conventions, not certified replication or live performance.',fontsize=8,color='#444444')
 fig.subplots_adjust(top=.83,bottom=.19,left=.08,right=.98,hspace=.18)
 fig.savefig(OUT/'task2_native_nav.png',dpi=180);plt.close(fig)
-print('Wrote 3 figures from aggregate CSVs only.')
+
+# Homepage overview: point estimates only, with different samples separated.
+# Exact historical dates and complete NAV/risk figures remain in the results guide.
+fig,axes=plt.subplots(1,2,figsize=(12.8,4.9),sharey=True)
+overview=[
+    (axes[0], [('cv_mean_rank_ic','Development CV','#777777'),
+               ('historical_full_universe_rank_ic','Later full-universe evaluation','#0072B2')],
+     'Model selection and historical evaluation\n66 validation months / 49 evaluation months'),
+    (axes[1], [('industry_raw_matched_rank_ic','Raw IC on the identical retained stocks','#777777'),
+               ('industry_adjusted_rank_ic','Two-sided industry-adjusted IC','#009E73')],
+     'Industry check on an identical sample\n49 months; known CSRC groups with at least 5 stocks')]
+for ax,fields,title in overview:
+    for shift,(field,label,color) in zip([-.17,.17],fields):
+        values=[comparison.loc[m,field] for m in models]
+        bars=ax.bar(x+shift,values,.31,color=color,label=label)
+        ax.bar_label(bars,labels=[f'{v:.4f}' for v in values],padding=3,fontsize=8.5)
+    ax.set_xticks(x,[NAMES[m] for m in models])
+    ax.set_title(title,loc='left',fontsize=10.5,pad=12)
+    ax.set_ylim(0,.19);ax.grid(axis='y',alpha=.2);ax.set_axisbelow(True)
+    ax.legend(frameon=False,fontsize=8.1,loc='upper left')
+axes[0].set_ylabel('Mean monthly Spearman Rank IC (correlation)')
+fig.suptitle('Task 1 | Ranking evidence across three model families',x=.07,ha='left',weight='bold',fontsize=14)
+fig.text(.07,.025,'Source: results/task1/model_comparison.csv. Historical-data research, not a synthetic demo; IC is not accuracy or investment return.\n'
+    'Point estimates shown. Different periods / samples are separated above; detailed dates, uncertainty and complete backtests are retained in docs/results_guide.md.',
+    fontsize=8,color='#444444')
+fig.subplots_adjust(top=.81,bottom=.20,left=.07,right=.98,wspace=.18)
+fig.savefig(OUT/'task1_ranking_evidence.png',dpi=180);plt.close(fig)
+
+# Homepage architecture: declared rules and account identities, without P&L
+# promises or generated demonstration prices. Counts come from public metadata.
+universe=pd.read_csv(ROOT/'results/task2/universe.csv')
+logical_count=len(universe)
+leg_count=len({leg for value in universe.actual_legs for leg in value.split(';')})
+config=json.loads((ROOT/'configs/task2.json').read_text())
+rules=config['rules']
+assert logical_count==16 and leg_count==20 and rules['reversal_confirmation']=='price_above_ma5'
+fig,ax=plt.subplots(figsize=(12.8,6.0))
+ax.set_xlim(0,1);ax.set_ylim(0,1);ax.axis('off')
+xs=[.03,.355,.68];top=.55;bottom=.17;bw=.29;bh=.25
+nodes=[
+    (xs[0],top,'1  Inputs and instrument identity',
+     f'{logical_count} logical exposures / {leg_count} accounting legs\n5 funded indices + 15 futures legs\nObserved sessions and trading masks'),
+    (xs[1],top,'2  Lagged trend signals',
+     'Native-observation lookbacks\nFour-component percentile ranking\nDecisions use previously known signals'),
+    (xs[2],top,'3  Portfolio rules',
+     f'Top{rules["top_n"]} selection; volatility-aware sizing\nPortfolio volatility bands / exposure scaling\nAsset caps and residual cash\nMA5-confirmed recovery allocation boost'),
+    (xs[2],bottom,'4  Staggered execution',
+     f'Monthly common sessions {rules["rebalance_days"][0]}–{rules["rebalance_days"][-1]}\nPhased target changes; closed-market deferral\nNew positions earn from the next interval'),
+    (xs[1],bottom,'5  Native P&L and costs',
+     'Funded principal vs futures variation margin\nSame-contract returns, rolls and FX marks\n'
+     f'{rules["transaction_cost"]*10000:g} bps per side + {rules["management_fee"]*100:g}% annual management'),
+    (xs[0],bottom,'6  Reconcile and evaluate',
+     'Cash + funded market value = NAV\nP&L less trading and management fees\nNet daily NAV and risk diagnostics')]
+for left,low,title,body in nodes:
+    ax.add_patch(FancyBboxPatch((left,low),bw,bh,boxstyle='round,pad=0.008,rounding_size=0.008',
+                 linewidth=.9,edgecolor='#B7BDC3',facecolor='#FFFFFF'))
+    ax.text(left+.016,low+bh-.038,title,ha='left',va='top',fontsize=10.3,weight='bold',color='#0072B2')
+    ax.text(left+.016,low+bh-.102,body,ha='left',va='top',fontsize=9.05,linespacing=1.8,color='#222222')
+arrows=[((xs[0]+bw+.008,top+bh/2),(xs[1]-.008,top+bh/2)),
+        ((xs[1]+bw+.008,top+bh/2),(xs[2]-.008,top+bh/2)),
+        ((xs[2]+bw/2,top-.012),(xs[2]+bw/2,bottom+bh+.012)),
+        ((xs[2]-.008,bottom+bh/2),(xs[1]+bw+.008,bottom+bh/2)),
+        ((xs[1]-.008,bottom+bh/2),(xs[0]+bw+.008,bottom+bh/2))]
+for start,end in arrows:
+    ax.add_patch(FancyArrowPatch(start,end,arrowstyle='-|>',mutation_scale=13,lw=1.2,color='#666666'))
+ax.text(.03,.963,'Task 2 | From native observations to a reconciled research account',ha='left',va='top',fontsize=14,weight='bold')
+ax.text(.03,.888,'Fixed rules, explicit instrument accounting and testable execution timing',ha='left',va='top',fontsize=10.5,color='#444444')
+ax.plot([.03,.97],[.10,.10],lw=.7,color='#B7BDC3')
+ax.text(.03,.07,'Source: configs/task2.json, results/task2/universe.csv and the public Task2 signal / rule / account modules.\n'
+    'Research assumptions include fractional positions, zero-interest CNY cash and synchronous end-of-day sizing.\n'
+    'Historical backtests and generated-data demos are labeled separately; neither is a live execution record.',
+    ha='left',va='top',fontsize=8.2,linespacing=1.4,color='#444444')
+fig.subplots_adjust(left=.02,right=.98,top=.98,bottom=.02)
+fig.savefig(OUT/'task2_research_workflow.png',dpi=180);plt.close(fig)
+print('Wrote 5 figures from public aggregate results, configuration and declared research rules.')

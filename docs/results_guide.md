@@ -2,7 +2,7 @@
 
 The `results/` directory contains aggregate outputs from completed historical research. These are separate from synthetic examples produced by the public demo. Running a demo does not reproduce the private historical inputs or certify the published performance.
 
-The original internship implementation and the November 2026 follow-up are also distinct. The follow-up added a common three-model comparison, chronological validation, portfolio controls, risk attribution and industry diagnostics to the original factor-selection idea, and rebuilt the multi-asset prototype with native underlying data. The exports document the revised research rather than claiming every extension was performed during the internship.
+The project comprises a three-model equity-factor comparison with chronological validation, portfolio controls, risk attribution and industry diagnostics, together with a native-underlying multi-asset strategy and explicit account simulation. The exports document the declared configurations, evaluation windows and validated calculations.
 
 ## How the code, configurations and archived results correspond
 
@@ -11,9 +11,9 @@ The public modules expose the research components; the historical CSVs preserve 
 - **Task 1 model comparison and six stock books:** `configs/task1.json`, `task1/data.py`, `features.py`, `models.py`, `research.py` and `portfolio.py` define the matching data treatment, grids, chronological folds, annual refits, Top30/50/100 books and fees. The Task 1 CLI directly runs these stages. Historical `cv_leaderboard.csv`, `model_comparison.csv`, baseline NAV/returns and the `stock_book` catalog rows summarize the corresponding evaluated stages.
 - **Task 1 market/cash and relative-state policies:** `task1/regimes.py` supplies their exposure/stock-basket helpers; `portfolio.py` accepts the resulting holdings/exposure. The archived `market_overlay` and `relative_state` rows preserve separate frozen development-selection experiments. They are not automatically searched or selected by the core CLI, and the full 48-policy catalog is not a Cartesian configuration grid.
 - **Task 1 industry adjustment:** `task1/diagnostics.py` provides published-as-of matching, the primary and sensitivity IC definitions, within-industry weighted IC and monthly-mean HAC/block-bootstrap inference. With `--industry-history`, the CLI writes monthly diagnostics for minimum group sizes 5, 2 and 10, the inference summary and primary-sample bootstrap results. Its IC field names match the published industry CSVs; the archive retains the five-stock primary monthly sample in a separate file.
-- **Task 1 FF3/FF5:** `task1/diagnostics.py::factor_attribution` implements matched-date OLS/Bartlett-HAC inference. It requires independently prepared factor returns with the correct dates and aggregation convention. The 48-row historical attribution catalog contains the earlier completed calls and publication formatting; the CLI does not download factors or automatically create that catalog.
+- **Task 1 FF3/FF5:** `task1/diagnostics.py::factor_attribution` implements matched-date OLS/Bartlett-HAC inference. It requires independently prepared factor returns with the correct dates and aggregation convention. The 48-row historical attribution catalog contains the validated regression outputs and publication formatting; the CLI does not download factors or automatically create that catalog.
 - **Task 2 native engine:** `configs/task2.json`, `task2/native_signals.py`, `rules.py`, `native_strategy.py`, `native_engine.py` and `future_accounting.py` implement the declared rule and account path; `inputs.py` validates prepared caller-owned inputs. `runner.py` writes a fresh ledger and summary. An actual local historical-core rerun using the same approved precomputed signals and native accounting inputs matched all 836 daily observations and both performance windows. The [sanitized verification record](../results/task2/portable_code_verification.json) records 96 checks and the verified module hashes. This core check does not assert that the general raw-input CLI, an altered warm-up or arbitrary replacement inputs will reconstruct the canonical signal cache.
-- **Figures:** `docs/figures/regenerate.py` is fully reproducible from the checked-in aggregate CSVs alone. It neither trains a model nor substitutes generated prices for the historical record.
+- **Figures:** `docs/figures/regenerate.py` builds the statistical/backtest charts from the checked-in aggregate CSVs and the workflow diagram from the declared strategy configuration. It neither trains a model nor substitutes generated prices for the historical record.
 
 Local real-data runs can write individual predictions, holdings, positions and trades to the requested `outputs/` directory, which is ignored by Git. Those local outputs are **not** the publication allowlist; do not copy them into `results/` when using private or licensed inputs.
 
@@ -21,17 +21,17 @@ The [Task 1 historical correspondence record](../results/task1/portable_code_ver
 
 ## Task 1: what to read first
 
-Start with `results/task1/model_comparison.csv`, then inspect `portfolio_metrics.csv` and `factor_attribution.csv`. The first file joins the frozen development choice with later historical diagnostics; it does not select a model using historical portfolio profit.
+Start with `results/task1/model_comparison.csv`, then inspect `portfolio_metrics.csv` and `factor_attribution.csv`. The first file joins the frozen development choice with evaluation-period diagnostics; it does not select a model using historical portfolio profit.
 
 The inputs comprise 70 supplied factors, including fundamental and price/volume variables, over 162 signal months from January 2005 to June 2018. The eligible panel has 319,441 stock-month rows and 3,540 distinct stock codes. The private stock-level panel is not published.
 
 The common protocol was:
 
-1. Fit the imputer and scaler using historical training observations only. The supplied factor values already appeared processed, so the verified follow-up did not apply an additional MAD-clipping pass.
+1. Fit the imputer and scaler using historical training observations only. The supplied factor values already appeared processed, so the configured pipeline did not apply an additional MAD-clipping pass.
 2. Recompute correlation screening in each training window. The screen uses median monthly absolute Spearman correlation at a 0.90 threshold and retains a representative using historical training IC.
 3. Compare Ridge on continuous forward relative returns with L2 Logistic and LightGBM on monthly top/bottom 30% return tails. Score the full eligible universe. A classifier trained on the tails supplies a ranking score, not a calibrated unconditional top-30% probability.
 4. Select configurations and the model family using mean full-universe monthly Rank IC across the same 66 chronological development-validation months. The three expanding folds are recorded in `summary.json`. No random stock-month split was used.
-5. Evaluate annual expanding-window refits on 49 later signal months, June 2014–June 2018. Model training outcomes must already be known before a prediction. This history had previously been inspected; chronological separation does not make it a new untouched holdout.
+5. Evaluate annual expanding-window refits on 49 evaluation signal months, June 2014–June 2018. Model training outcomes must already be known before a prediction. This history had previously been inspected; chronological separation does not make it a new untouched holdout.
 
 LightGBM was the development-selected family. The selected development mean Rank IC was approximately 0.1380, versus 0.1248 for Ridge and 0.1242 for Logistic. Full-universe historical mean Rank IC was approximately 0.1399, 0.1281 and 0.1312 respectively. The ranking diagnostics should be considered together with portfolio concentration, risk exposure and uncertainty.
 
@@ -39,7 +39,7 @@ LightGBM was the development-selected family. The selected development mean Rank
 
 ## Absolute return reconstruction and timing
 
-The supplied target is interpreted as an arithmetic difference: the stock's next holding-period return minus the CSI300 return over the same dates. The follow-up reconstructs a fully invested stock basket's absolute return by adding the same-period official CSI300 **price** return. It does not compound the relative-return difference as if it were a self-financing wealth return.
+The supplied target is interpreted as an arithmetic difference: the stock's next holding-period return minus the CSI300 return over the same dates. The absolute-return calculation reconstructs a fully invested stock basket's return by adding the same-period official CSI300 **price** return. It does not compound the relative-return difference as if it were a self-financing wealth return.
 
 The primary holding interval is the first trading-day **close** of month `t+1` to the first trading-day **close** of `t+2`, for signal month `t`. The 49 intervals run from July 1, 2014 to August 1, 2018. They are not natural month-end-to-month-end intervals. The reconstruction is supported by historical price matching, but does not certify the original vendor's release vintages or executable fills.
 
@@ -63,7 +63,7 @@ These large historical returns are hypothetical research results over a short, p
 
 The common Top30 baseline appears once, even where it was shared across experiments. The catalog does not contain unrun combinations such as Top100 × a cash overlay × the old relative-state rule.
 
-The `selected_*_development` flags preserve each experiment's original development criterion. They are not flags for the best later return or lowest later MDD. All three model families retained the baseline in the common absolute-return market/cash selection. The prior relative-state and stock-book selections used different, explicitly recorded objectives; they should not be merged into a new strategy after viewing results.
+The `selected_*_development` flags preserve each experiment's original development criterion. They are not flags for the best later return or lowest later MDD. All three model families retained the baseline in the common absolute-return market/cash selection. The relative-state and stock-book selections use different, explicitly recorded objectives; they should not be merged into a new strategy after viewing results.
 
 The risk-rank stock weights use a **processed three-month-volatility factor's cross-sectional rank**, not its numerical value as actual volatility. The common market-volatility overlay instead uses CSI300 63-day realized volatility to set exposure. Its reference 15% level is not a promise that the resulting portfolio realizes 15% volatility.
 
@@ -94,7 +94,7 @@ Two sensitivities answer related but different questions:
 
 `industry_inference.csv` contains monthly-mean HAC6 inference for minimum groups of 2, 5 and 10 stocks. `industry_bootstrap.csv` contains 10,000-draw moving-block confidence intervals for the primary five-stock sample, using blocks of 6 months primarily and 3/12 months as sensitivities. Positive adjusted IC supports a conditional ranking association beyond industry means. It does not prove pure alpha, certify industry-neutral holdings, or change the reported portfolio return or MDD. Quarterly publications can lag real business changes.
 
-## Task 2: native-underlying multi-asset prototype
+## Task 2: native-underlying multi-asset strategy
 
 The completed run covers **16 logical assets and 20 actual underlying legs**. The source search begins in 2018, but that is not the strategy's performance start. All assets first needed the required native-observation warm-up and then the next complete monthly execution phase. Initial NAV is dated June 3, 2020; **first execution is June 4, 2020**; the cutoff is August 18, 2023.
 
@@ -113,10 +113,10 @@ The account distinguishes funded equity-index exposures from futures variation m
 
 The model charges 5 bps per one-way traded notional plus a 0.5% annual management fee accrued over elapsed calendar days. It uses fractional research positions, zero-interest CNY cash and synchronous end-of-day sizing. Margin calls, integer lots, collateral interest, market impact and real asynchronous fills are not simulated. The FX mark is the previous observed Fed H.10 value, without reconstructed historical release timestamps; this is not certified point-in-time FX availability.
 
-No exact daily NAV for the reference index was supplied. Consequently an exact same-window reference Sharpe, volatility or MDD comparison is unavailable. The private reference report is not redistributed, and the prototype is not presented as an exact replication of undisclosed roll, basket or currency conventions.
+No exact daily NAV for the reference index was supplied. Consequently an exact same-window reference Sharpe, volatility or MDD comparison is unavailable. The private reference report is not redistributed, and the strategy is not presented as an exact replication of undisclosed roll, basket or currency conventions.
 
 ## Reading and regenerating figures
 
 All rates in the CSVs are decimal fractions unless their names explicitly state otherwise. MDD is stored as a positive loss magnitude. Blank factor-attribution cells mean **not estimated**, not zero. See [data_dictionary.md](data_dictionary.md) for formulas and [data_access.md](data_access.md) for input boundaries.
 
-The three PNGs can be regenerated from the checked-in aggregate CSVs alone with `python docs/figures/regenerate.py` after installing pandas and matplotlib. No private historical panel or vendor file is read by that plotting script.
+The five PNGs can be regenerated with `python docs/figures/regenerate.py` after installing pandas and matplotlib. Statistical/backtest charts use the checked-in aggregate CSVs; the workflow diagram describes the declared strategy configuration. No private historical panel or vendor file is read by the plotting script. The date-free project overview links to the [complete results page](../results/README.md), which preserves all historical backtest figures and evaluation windows.

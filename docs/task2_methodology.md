@@ -1,14 +1,13 @@
 # Task2: native multi-asset trend research
 
-This module is a portable version of the later original-underlying research
-engine. It is a GMAT-style research prototype, not a replication of an official
-index or a claim to know its undisclosed implementation. There is one declared
+This module implements a portable GMAT-style multi-asset trend strategy using
+native underlying instruments. It is not a replication of an official index
+or a claim to know its undisclosed implementation. There is one declared
 configuration, not an optimizer selected using the displayed return.
 
-The original internship task implemented the research report's rules. The
-native historical backtest was completed separately in November 2026. Its
-2020–2023 return window is an investment simulation period, not the work dates,
-and this fixed-rule reconstruction is not presented as an untouched OOS test.
+The historical evaluation uses a fixed-rule account simulation over the
+2020–2023 window described below. Its inputs and conventions are explicit;
+the reconstruction is not presented as an untouched OOS test.
 
 ## What the public demo does
 
@@ -99,7 +98,7 @@ not claimed.
 ## Reversal rule
 
 The native primary confirmation is **price above its five-session moving
-average**, not the earlier five-day-return alternative. The rule first observes
+average**, rather than a five-day-return condition. The rule first observes
 an adjacent-MA alignment score above0.35. Alignment compares MA1≥MA2 through
 MA259≥MA260. During a subsequent weak episode, its minimum must reach at most
 0.10, and the current value must recover at least0.005 from that minimum while

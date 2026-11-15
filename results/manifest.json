@@ -1,12 +1,52 @@
 {
   "schema_version": 1,
-  "scope": "Public aggregate historical results, verified code correspondence records, configurations and figures. No original factor/quote/stock-level data.",
+  "scope": "Public aggregate historical results, research results guide, verified code correspondence records, configurations and figures. No original factor/quote/stock-level data.",
   "verification_records": [
     "results/task1/portable_code_verification.json",
     "results/task2/portable_code_verification.json"
   ],
-  "interpretation": "Historical and synthetic demo outputs are separate. See docs/results_guide.md for code mapping and reproduction boundaries.",
+  "interpretation": "Historical and synthetic demo outputs are separate. See results/README.md and docs/results_guide.md for full backtests, code mapping and reproduction boundaries.",
   "files": [
+    {
+      "path": "configs/task1.json",
+      "sha256": "e7cd053bb3da998911d52c94e41547552f823aadb5acc426ade3eeb84af8ac70",
+      "bytes": 804
+    },
+    {
+      "path": "configs/task2.json",
+      "sha256": "eaf9e57b7ca5c76f2ebad21b09de39ba0e8bae9f2ace47848183631c68d8bab5",
+      "bytes": 1474
+    },
+    {
+      "path": "docs/figures/task1_model_comparison.png",
+      "sha256": "144b10fb43a753b88c5ac545bcef54d140778db85e3c8a2826a77ce52a574a1c",
+      "bytes": 190016
+    },
+    {
+      "path": "docs/figures/task1_portfolio_tradeoffs.png",
+      "sha256": "993ab03b1e8336bcea26dad793a0b48106178b774d4a7f720cae429e53128bd8",
+      "bytes": 136478
+    },
+    {
+      "path": "docs/figures/task1_ranking_evidence.png",
+      "sha256": "6e60382b8b9227d5b580e641e83679bf4e04b2ae163dd34c852c16f4cff8f847",
+      "bytes": 130458
+    },
+    {
+      "path": "docs/figures/task2_native_nav.png",
+      "sha256": "1d942e566704074b4257e8a15f2db510e1ff6b633481c8fb380bce424eca071a",
+      "bytes": 252307
+    },
+    {
+      "path": "docs/figures/task2_research_workflow.png",
+      "sha256": "f7b24c5e05b2b5a19855d341f07780207049913897e6e5c67af043bbd4ee7654",
+      "bytes": 189515
+    },
+    {
+      "path": "results/README.md",
+      "sha256": "84d5e1ab958630ee84ab4d39d9836379180c6a03980e4e3ba9ac3dd661e287a4",
+      "bytes": 6254
+    },
     {
       "path": "results/task1/cv_leaderboard.csv",
       "sha256": "00ceb532de3e824015ee9560fd5eedc2b62ea007595ad644b5a89ab7121b3021",
@@ -74,8 +114,8 @@
     },
     {
       "path": "results/task1/summary.json",
-      "sha256": "74f65b1ff90539e8d06333b2c4545ff30946c06a46e81f435ca9677dd16fe337",
-      "bytes": 5397
+      "sha256": "d6bd4f295ab69df767fe019f22f4fcc85ecc5dffd474f59e99ff487b3ba5b47b",
+      "bytes": 5361
     },
     {
       "path": "results/task2/monthly_returns.csv",
@@ -102,8 +142,8 @@
     },
     {
       "path": "results/task2/summary.json",
-      "sha256": "31dd56acf8124ea88210165e7c89bec0367a388aaffd4f28f69c9b98b406c872",
-      "bytes": 3394
+      "sha256": "064d4913442c13fc7e07d40f09ac284771889a0d21dc7fdd0dee08ed33d21a42",
+      "bytes": 3346
     },
     {
       "path": "results/task2/universe.csv",
@@ -121,31 +161,6 @@
       "sha256": "4e703e1928217f5365ef21112e9ff31b47913da9053fb856c41c9a5dcb51ee19",
       "bytes": 307,
       "rows": 4
-    },
-    {
-      "path": "configs/task1.json",
-      "sha256": "e7cd053bb3da998911d52c94e41547552f823aadb5acc426ade3eeb84af8ac70",
-      "bytes": 804
-    },
-    {
-      "path": "configs/task2.json",
-      "sha256": "eaf9e57b7ca5c76f2ebad21b09de39ba0e8bae9f2ace47848183631c68d8bab5",
-      "bytes": 1474
-    },
-    {
-      "path": "docs/figures/task1_model_comparison.png",
-      "sha256": "144b10fb43a753b88c5ac545bcef54d140778db85e3c8a2826a77ce52a574a1c",
-      "bytes": 190016
-    },
-    {
-      "path": "docs/figures/task1_portfolio_tradeoffs.png",
-      "sha256": "993ab03b1e8336bcea26dad793a0b48106178b774d4a7f720cae429e53128bd8",
-      "bytes": 136478
-    },
-    {
-      "path": "docs/figures/task2_native_nav.png",
-      "sha256": "1d942e566704074b4257e8a15f2db510e1ff6b633481c8fb380bce424eca071a",
-      "bytes": 252307
     }
   ]
 }

@@ -6,8 +6,8 @@ Access to this source code does not grant rights to third-party data. Downloadab
 
 ## What can be reproduced from this checkout
 
-- The public demos and tests run using synthetic/generated fixtures rather than the historical internship data.
-- The three figures in `docs/figures/` can be regenerated from the checked-in aggregate CSVs with `python docs/figures/regenerate.py`, using pandas and matplotlib.
+- The public demos and tests run using synthetic/generated fixtures rather than the historical source data.
+- The five figures in `docs/figures/` can be regenerated with `python docs/figures/regenerate.py`, using public aggregate CSVs for statistical/backtest charts and the declared configuration for the workflow diagram. No underlying market input is read.
 - Summary counts, catalog joins, strategy NAV compounding and many metric identities can be inspected directly from the aggregate exports.
 - The complete historical model training, constituent-level portfolio construction and source-data verification require the omitted inputs. A successful synthetic demo must not be described as a reproduction of the published historical returns.
 
@@ -56,7 +56,7 @@ Do not silently substitute another universe, current constituents, newer factor 
 
 ### External risk and classification sources
 
-The absolute-return follow-up used official **CSI300 price-index** history, available through [China Securities Index](https://www.csindex.com.cn/). Raw quotes are not redistributed here. The main factor-attribution follow-up used the [BetaPlus Chinese A-share FF3/FF5 daily dataset](https://www.factorwar.com/data/factor-models/). Its RF is a research rate proxy; exact holding-window aggregation and factor definitions are documented in the results guide. This repository publishes regression coefficients and uncertainty summaries, not the provider's factor time series.
+The absolute-return reconstruction uses official **CSI300 price-index** history, available through [China Securities Index](https://www.csindex.com.cn/). Raw quotes are not redistributed here. The main factor attribution uses the [BetaPlus Chinese A-share FF3/FF5 daily dataset](https://www.factorwar.com/data/factor-models/). Its RF is a research rate proxy; exact holding-window aggregation and factor definitions are documented in the results guide. This repository publishes regression coefficients and uncertainty summaries, not the provider's factor time series.
 
 Industry robustness used dated quarterly classification releases from the [CSRC industry-classification archive](https://www.csrc.gov.cn/csrc/c100103/common_list.shtml). The private research extraction preserved publication dates, snapshot dates and code/name checks. The latest release published by each signal-month end was used; later/current labels were not backfilled. These are CSRC detailed major industries, not the Shenwan industry standard. Only monthly coverage counts and aggregate IC diagnostics are published.
 
@@ -76,6 +76,6 @@ The FX convention uses the previous observed Federal Reserve H.10 mark. The hist
 
 ## Reference material and performance claims
 
-The private reference report and its annual return quotations are not redistributed. No exact daily reference NAV was available for an equal-window Sharpe, volatility or MDD comparison, and the public exports explicitly flag this absence. The repository's own complete native-run results are reported independently.
+The private reference report and its annual return quotations are not redistributed. No exact daily reference NAV was available for an equal-window Sharpe, volatility or MDD comparison, and the public exports explicitly flag this absence. The repository reports its complete native-run results using the stated account and metric conventions.
 
-All performance is hypothetical historical research under the stated fees and accounting assumptions. The original inputs and later historical period have been examined repeatedly; the exports are not an untouched out-of-sample investment record. No inferred daily Task 1 NAV or unrun combined strategy is introduced to improve the presentation.
+All performance is hypothetical historical research under the stated fees and accounting assumptions. The source inputs and historical evaluation period have been examined repeatedly; the exports are not an untouched out-of-sample investment record. No inferred daily Task 1 NAV or unrun combined strategy is introduced to improve the presentation.

@@ -1,10 +1,10 @@
 # Task 1: factor-based A-share stock-selection research
 
-This module reconstructs the research as a portable, explicit pipeline. The
-original internship prototype used logistic regression. The linear/tree model
-comparison, stricter validation, alternative portfolios, industry checks and
-risk attribution are subsequent research. Synthetic demo results are software
-fixtures and must never be described as historical investment performance.
+This module implements a cross-sectional factor research pipeline comparing
+Ridge, L2 Logistic and LightGBM through chronological model selection, portfolio
+evaluation, industry diagnostics and risk attribution. Synthetic demo results
+are software fixtures and must never be described as historical investment
+performance.
 
 ## Run it
 
@@ -27,7 +27,7 @@ No developer-specific library path is required or embedded in this project.
 
 ### Executable scope versus archived results
 
-The main CLI performs the three-family development selection, annual later
+The main CLI performs the three-family development selection, annual evaluation
 refits, and the **six stock-count/weight books at four fee assumptions**. It
 does not automatically run all 48 archived portfolio configurations. Market
 overlays and relative-state policies are available as explicit helper APIs;
@@ -107,7 +107,7 @@ unscaled. It is not silently enabled for the historical project.
 ## Chronology and availability
 
 The 113-month nominal development interval is 2005-01–2014-05; the 49-month
-subsequent interval is 2014-06–2018-06. Same-month stocks always stay together.
+evaluation interval is 2014-06–2018-06. Same-month stocks always stay together.
 
 The three expanding validation folds are:
 
@@ -220,7 +220,7 @@ trend×volatility combination. Only history through the signal month is used;
 remaining capital earns the matched RF proxy. The15%reference is for benchmark
 volatility scaling, not a guarantee of portfolio volatility.
 
-`regimes.relative_defensive_holdings` is the earlier, different extension:
+`regimes.relative_defensive_holdings` implements the relative-state policy family:
 sum the last 6 or 12 known universe-average relative targets, using only signal
 months`<=t-2`; when negative, pick the 30 lowest-risk names from the score
 Top100 or 200. Equal-risk ties prefer higher model score, then stock code.

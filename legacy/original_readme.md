@@ -1,20 +1,20 @@
-> Archived README from the early prototypes. Paths and methods below describe the earlier scripts. Use the current [project README](../README.md) and [results guide](../docs/results_guide.md) for the revised research.
+> Archived script reference. Paths and methods below describe only the scripts in `legacy/`. Use the current [project README](../README.md) and [results guide](../docs/results_guide.md) for the validated project configuration and results.
 
-# Quant Research Strategy Prototypes
+# Archived strategy scripts
 
-This repository contains two Python prototypes for systematic investing research. It is organized as a concise portfolio project for quantitative research internship applications: source code and project summaries are included, while raw datasets, internship reports, internal reference PDFs, and other sensitive materials are excluded.
+These archived scripts cover factor-based equity selection and multi-asset trend allocation. Raw datasets, source reports, reference PDFs and sensitive materials are excluded. Their methods and outputs are not interchangeable with the validated modules and aggregate results linked above.
 
 ## Task 1: Factor-Based A-Share Stock Selection
 
 Task 1 develops a cross-sectional A-share stock selection model using a monthly factor panel. The model labels the top and bottom 30% of next-month excess returns, preprocesses 70 equity factors with MAD-based winsorization and standardization, and trains a logistic regression classifier to estimate stock-level positive-return probabilities.
 
-The prototype then uses out-of-sample predictions to construct a monthly top-N portfolio weighted by predicted probability. The workflow covers factor preprocessing, supervised classification, out-of-sample forecasting, and basic portfolio backtesting.
+The archived equity script then uses out-of-sample predictions to construct a monthly top-N portfolio weighted by predicted probability. The workflow covers factor preprocessing, supervised classification, out-of-sample forecasting, and basic portfolio backtesting.
 
 Code: `src/task1_factor_stock_selection.py`
 
 ## Task 2: GMAT-Style Multi-Asset Trend Strategy
 
-Task 2 implements a GMAT-style global multi-asset allocation prototype. The strategy covers equity indices, government bonds, and commodities, and combines trend-following signals with volatility-aware position sizing, asset-level caps, and periodic rebalancing.
+Task 2 implements GMAT-style global multi-asset allocation rules. The strategy covers equity indices, government bonds, and commodities, and combines trend-following signals with volatility-aware position sizing, asset-level caps, and periodic rebalancing.
 
 The code includes GMAT2-style and GMAT3-style configurations. It uses reproducible synthetic price paths to validate the implementation structure, rather than publishing or relying on proprietary market data.
 

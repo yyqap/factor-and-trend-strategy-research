@@ -1,6 +1,6 @@
 {
   "result_kind": "Aggregate historical research export; not synthetic demo output or a live track record",
-  "research_revision": "November 2026 follow-up; distinct from original internship implementation",
+  "research_revision": "Validated research configuration v0.1",
   "data": {
     "rows": 319441,
     "unique_stocks": 3540,
