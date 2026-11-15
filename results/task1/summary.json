@@ -1,0 +1,143 @@
+{
+  "result_kind": "Aggregate historical research export; not synthetic demo output or a live track record",
+  "research_revision": "November 2026 follow-up; distinct from original internship implementation",
+  "data": {
+    "rows": 319441,
+    "unique_stocks": 3540,
+    "factor_count": 70,
+    "signal_start": "2005-01",
+    "signal_end": "2018-06",
+    "months": 162
+  },
+  "development_signal_window": [
+    "2005-01",
+    "2014-05"
+  ],
+  "historical_signal_window": [
+    "2014-06",
+    "2018-06"
+  ],
+  "actual_holding_window": [
+    "2014-07-01",
+    "2018-08-01"
+  ],
+  "historical_months": 49,
+  "validation_months": 66,
+  "model_selection": "Mean full-universe monthly Rank IC on the same 66 chronological validation months",
+  "family_selected_by_development": "lightgbm",
+  "folds": [
+    {
+      "fold": 1,
+      "train_start": "2005-01",
+      "train_end": "2008-09",
+      "validation_start": "2008-11",
+      "validation_end": "2010-08",
+      "validation_months": 22
+    },
+    {
+      "fold": 2,
+      "train_start": "2005-01",
+      "train_end": "2010-07",
+      "validation_start": "2010-09",
+      "validation_end": "2012-06",
+      "validation_months": 22
+    },
+    {
+      "fold": 3,
+      "train_start": "2005-01",
+      "train_end": "2012-05",
+      "validation_start": "2012-07",
+      "validation_end": "2014-04",
+      "validation_months": 22
+    }
+  ],
+  "model_comparison": [
+    {
+      "model": "ridge",
+      "selected_by_development": false,
+      "cv_mean_rank_ic": 0.1247857125389096,
+      "historical_full_universe_rank_ic": 0.1281291567383404,
+      "industry_raw_matched_rank_ic": 0.12831272747277642,
+      "industry_adjusted_rank_ic": 0.13030287318039382,
+      "historical_months": 49,
+      "selected_configuration": "{\"config\": \"ridge_corr90_lambda1\", \"feature_counts\": [66, 66, 66], \"lambda\": 1.0, \"mean_monthly_rank_ic\": 0.12478571253890963, \"screen\": true, \"valid_ic_months\": 66}",
+      "baseline_cost_bps": 10,
+      "cagr": 0.253693852565966,
+      "sharpe": 0.70632382041975,
+      "monthly_observation_nav_mdd": 0.333003405352628,
+      "ff5_alpha_annualized_arithmetic": 0.153477191556942
+    },
+    {
+      "model": "logistic",
+      "selected_by_development": false,
+      "cv_mean_rank_ic": 0.12418363080846806,
+      "historical_full_universe_rank_ic": 0.13119467588229752,
+      "industry_raw_matched_rank_ic": 0.13171278001416664,
+      "industry_adjusted_rank_ic": 0.13230933352477478,
+      "historical_months": 49,
+      "selected_configuration": "{\"C\": 0.01}",
+      "baseline_cost_bps": 10,
+      "cagr": 0.343824771886553,
+      "sharpe": 0.91053522054498,
+      "monthly_observation_nav_mdd": 0.365095011993697,
+      "ff5_alpha_annualized_arithmetic": 0.188693572549139
+    },
+    {
+      "model": "lightgbm",
+      "selected_by_development": true,
+      "cv_mean_rank_ic": 0.13795107986313404,
+      "historical_full_universe_rank_ic": 0.13991286634302538,
+      "industry_raw_matched_rank_ic": 0.14024141247025546,
+      "industry_adjusted_rank_ic": 0.1398557306905168,
+      "historical_months": 49,
+      "selected_configuration": "{\"min_child_samples\": 1000, \"n_estimators\": 100, \"num_leaves\": 7}",
+      "baseline_cost_bps": 10,
+      "cagr": 0.415867119934422,
+      "sharpe": 0.965084381039898,
+      "monthly_observation_nav_mdd": 0.374866558861617,
+      "ff5_alpha_annualized_arithmetic": 0.281420174167303
+    }
+  ],
+  "portfolio_catalog": {
+    "unique_configurations": 48,
+    "fee_scenarios": [
+      0,
+      5,
+      10,
+      20
+    ],
+    "rows": 192,
+    "configurations_per_model": 16,
+    "stock_books_per_model": 6,
+    "market_cash_overlays_per_model": 4,
+    "relative_state_controls_per_model": 6
+  },
+  "industry": {
+    "classification": "CSRC detailed major industry; not Shenwan industry taxonomy",
+    "source_snapshot_count": 18,
+    "snapshot_window": [
+      "2013Q4",
+      "2018Q1"
+    ],
+    "publication_asof": true,
+    "primary_minimum_group_size": 5,
+    "minimum_group_sensitivity": [
+      2,
+      10
+    ],
+    "primary": "Spearman after demeaning both raw scores and future returns by industry",
+    "inference": "Monthly equal weighting; HAC6 normal intervals and moving-block bootstrap with 10000 draws; block6 primary, block3/12 sensitivity",
+    "mean_known_label_coverage": 0.9921355807388609
+  },
+  "return_basis": "Original arithmetic stock-minus-CSI300 label plus same-entry/exit official CSI300 PRICE return; first trading close to next first trading close",
+  "risk_free": "BetaPlus provider daily RF proxy compounded over exact holding dates; research proxy rather than executable cash instrument",
+  "attribution": "Chinese A-share BetaPlus FF3/FF5 daily-derived exact-window factor proxy; net10bps, HAC6; annual alpha is 12 times monthly intercept",
+  "limitations": [
+    "Previously examined historical period; not a pristine holdout.",
+    "Original factor release vintages and real trade fills are not certified.",
+    "Monthly-observation wealth MDD cannot identify intramonth or daily portfolio drawdown.",
+    "Cost uses target-weight changes, without holding drift, spread, market impact or tradability constraints.",
+    "Industry-adjusted IC is an evaluation diagnostic, not an industry-neutral portfolio or proof of pure alpha.",
+    "Full 48-policy catalog records actually evaluated designs, not unrun Cartesian combinations."
+  ]
+}

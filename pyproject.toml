@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "factor-trend-research"
+version = "0.1.0"
+description = "Cross-sectional equity ranking and multi-asset trend research with explicit validation and accounting conventions"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<3", "pandas>=2.2,<3", "scipy>=1.12,<2", "scikit-learn>=1.6,<2"]
+
+[project.optional-dependencies]
+research = ["lightgbm>=4.6,<5", "matplotlib>=3.9,<4"]
+dev = ["pytest>=8.3,<10"]
+
+[project.scripts]
+factor-trend-research = "factor_trend_research.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["factor_trend_research*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

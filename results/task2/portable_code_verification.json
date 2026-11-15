@@ -1,0 +1,153 @@
+{
+  "status": "PASS",
+  "verification_kind": "Actual historical portable-core rerun with the canonical approved prepared native signal and accounting inputs",
+  "scope": "Historical cached/as-of signals, complete CNY-risk suffix, identical native accounting marks/calendar, fixed configuration and original first-execution gate. This is not a synthetic demo comparison.",
+  "synthetic": false,
+  "data_redistributed": false,
+  "historical_window": {
+    "initial_nav_date": "2020-06-03",
+    "first_execution": "2020-06-04",
+    "cutoff": "2023-08-18",
+    "valuation_observations": 836,
+    "logical_assets": 16,
+    "actual_accounting_legs": 20
+  },
+  "checks_passed": 96,
+  "approved_input_files_hash_checked": 14,
+  "matches": {
+    "all_dates": true,
+    "all_daily_accounting_columns": true,
+    "all_logical_weights": true,
+    "all_actual_positions": true,
+    "all_actual_trades_and_costs": true,
+    "all_lagged_decisions": true,
+    "public_normalized_NAV": true,
+    "public_net_returns": true,
+    "full_window_metrics": true,
+    "fixed_2021_window_metrics": true
+  },
+  "maximum_errors": {
+    "daily_accounting_columns_absolute_cny": 2.3283064365386963e-10,
+    "public_normalized_nav_absolute": 6.661338147750939e-16,
+    "public_daily_net_return_absolute": 0.0
+  },
+  "comparison_tolerances": {
+    "daily_currency_amounts_absolute_cny": 1e-07,
+    "daily_currency_amounts_relative": 1e-11,
+    "normalized_NAV_and_return_absolute": 1e-12,
+    "metric_absolute": 1e-12,
+    "metric_relative": 1e-11
+  },
+  "metric_comparisons": [
+    {
+      "window": "full_native_window",
+      "metric": "cumulative_return",
+      "portable_core": 0.08369721891092974,
+      "saved_public_result": 0.0836972189109297,
+      "absolute_difference": 4.163336342344337e-17,
+      "passed": true
+    },
+    {
+      "window": "full_native_window",
+      "metric": "cagr",
+      "portable_core": 0.02538802801214346,
+      "saved_public_result": 0.0253880280121434,
+      "absolute_difference": 5.898059818321144e-17,
+      "passed": true
+    },
+    {
+      "window": "full_native_window",
+      "metric": "annualized_volatility",
+      "portable_core": 0.0261972492442788,
+      "saved_public_result": 0.0261972492442788,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    {
+      "window": "full_native_window",
+      "metric": "sharpe_rf_zero",
+      "portable_core": 0.9379984855432206,
+      "saved_public_result": 0.9379984855432206,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    {
+      "window": "full_native_window",
+      "metric": "maximum_drawdown",
+      "portable_core": 0.03440772076633958,
+      "saved_public_result": 0.0344077207663395,
+      "absolute_difference": 7.632783294297951e-17,
+      "passed": true
+    },
+    {
+      "window": "fixed_2021_to_cutoff",
+      "metric": "cumulative_return",
+      "portable_core": 0.05700775750946274,
+      "saved_public_result": 0.0570077575094627,
+      "absolute_difference": 4.163336342344337e-17,
+      "passed": true
+    },
+    {
+      "window": "fixed_2021_to_cutoff",
+      "metric": "cagr",
+      "portable_core": 0.02131801624983476,
+      "saved_public_result": 0.0213180162498347,
+      "absolute_difference": 5.898059818321144e-17,
+      "passed": true
+    },
+    {
+      "window": "fixed_2021_to_cutoff",
+      "metric": "annualized_volatility",
+      "portable_core": 0.026135917900195215,
+      "saved_public_result": 0.0261359179001952,
+      "absolute_difference": 1.3877787807814457e-17,
+      "passed": true
+    },
+    {
+      "window": "fixed_2021_to_cutoff",
+      "metric": "sharpe_rf_zero",
+      "portable_core": 0.793475753240962,
+      "saved_public_result": 0.793475753240962,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    {
+      "window": "fixed_2021_to_cutoff",
+      "metric": "maximum_drawdown",
+      "portable_core": 0.0344077207663398,
+      "saved_public_result": 0.0344077207663398,
+      "absolute_difference": 0.0,
+      "passed": true
+    }
+  ],
+  "code_correspondence": {
+    "native_engine_and_futures_primitives": "Byte-identical to canonical historical modules.",
+    "signal_functions": "logical_returns and build_signals structurally identical after portable imports.",
+    "fixed_rule_functions": "Config, project_weights, portfolio_volatility, risk_scale and target structurally identical to the canonical fixed-rule helper.",
+    "execution_functions": "Execution and preparation helper functions structurally identical; only import packaging and the protocol label caller_gated_native_inputs differ.",
+    "method": "Parsed Python AST comparison excluding source locations; intentional protocol-label change normalized for comparison, not numerical changes."
+  },
+  "verified_portable_code_sha256": {
+    "src/factor_trend_research/task2/native_engine.py": "56ee0fe9de6f20b3433f76bf371266a4422bcbf9d627976885bb08f864ce2467",
+    "src/factor_trend_research/task2/future_accounting.py": "53db2192a9ab5b4f4dbc918ec04cb7ca3b5c6e06ec436fe1884620ce56722c13",
+    "src/factor_trend_research/task2/native_signals.py": "ca821b7976d423a9199b201ea6360e70ee56144564d0cb592e55f499708273e9",
+    "src/factor_trend_research/task2/native_strategy.py": "d12c1d4d7d06b327fe1798dc2efd7eabb3ab81942240a760f6f59b515a1afd1b",
+    "src/factor_trend_research/task2/rules.py": "714ba23dcb0a3bd4a6bad372fa8052b8a99b0a09ed7a23df95b67ecc33fa2979",
+    "src/factor_trend_research/task2/universe.py": "a1b495674e79a985e2f865451fc0209e3a91627f6c06f009ef0af8ba2fef7636",
+    "src/factor_trend_research/task2/runner.py": "f7e6d50ddd743237a278d4e11d9116367237981e2cc0b0228248cf5cfc085446",
+    "src/factor_trend_research/task2/inputs.py": "81e57165cbbd694848552d5658d284237331af0891ba4938a09357d97bb9e2ed"
+  },
+  "test_suite": {
+    "task2_tests_passed": 43,
+    "additional_unittest_subtests_passed": 7,
+    "runner": "pytest in the project virtual environment",
+    "financial_source_data_used_in_unit_tests": false
+  },
+  "reproduction_boundary": {
+    "historical_core": "Reproduces the saved historical path given the same approved precomputed signal frames and native accounting inputs.",
+    "raw_input_CLI": "The --native-inputs CLI has its own caller-metadata/five-CSV contract and rebuilds native signals. This audit does not assert that arbitrary cropped raw inputs, changed warm-up history or that CLI alone recreate the canonical signal cache.",
+    "demo": "--demo is generated synthetic software data; its metrics are not the committed historical results.",
+    "private_data": "Underlying source archives, quotes, actual contract-level input marks and private approval manifests were read locally and are not included in public tracked files.",
+    "limits": "No independent vendor/PIT certification, actual execution claim or exact official-reference replication follows from code/ledger parity."
+  }
+}

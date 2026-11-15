@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "rules": {
+    "top_n": 11,
+    "annualization": 252,
+    "risk_budget": 0.08,
+    "vol_target": 0.04,
+    "vol_upper": 0.045,
+    "vol_lower": 0.03,
+    "gross_limit": 1.0,
+    "cash_buffer": 0.005,
+    "volatility_floor": 0.005,
+    "transaction_cost": 0.0005,
+    "management_fee": 0.005,
+    "ranking": "percentile_mean",
+    "mode": "momentum",
+    "reversal": true,
+    "reversal_confirmation": "price_above_ma5",
+    "reversal_increment": 0.05,
+    "adaptive_volatility": true,
+    "daily_vol_control": true,
+    "monthly_vol_target": true,
+    "execution_lag": 1,
+    "rebalance_days": [
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "caps": {
+    "CSI300": 0.1,
+    "CSI500": 0.1,
+    "CSI1000": 0.1,
+    "Nasdaq100": 0.1,
+    "SP500": 0.1,
+    "China2Y": 0.4,
+    "China5Y": 0.4,
+    "China10Y": 0.4,
+    "US2Y": 0.6,
+    "US5Y": 0.4,
+    "US10Y": 0.4,
+    "Brent": 0.1,
+    "ShanghaiGold": 0.1,
+    "ShanghaiCopper": 0.1,
+    "SoybeanMeal": 0.1,
+    "FerrousComplex": 0.1
+  },
+  "demo": {
+    "seed": 20261114,
+    "periods": 520,
+    "evaluation_start_index": 300,
+    "initial_nav_cny": 1000000,
+    "synthetic_only": true
+  },
+  "notes": [
+    "Fixed research configuration; no parameter search or official index replication.",
+    "Risk budget is inverse-volatility sizing, not covariance-based equal risk contribution.",
+    "Synthetic demo uses generated16logical/20legquotes, FX androlls; it contains no market history."
+  ]
+}

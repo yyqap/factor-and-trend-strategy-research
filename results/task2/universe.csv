@@ -1,0 +1,17 @@
+logical_asset,actual_legs,leg_weights
+CSI300,CSI300,1.0
+CSI500,CSI500,1.0
+CSI1000,CSI1000,1.0
+Nasdaq100,Nasdaq100,1.0
+SP500,SP500,1.0
+China2Y,TS,1.0
+China5Y,TF,1.0
+China10Y,T,1.0
+US2Y,ZT,1.0
+US5Y,ZF,1.0
+US10Y,ZN,1.0
+Brent,B,1.0
+ShanghaiGold,AU,1.0
+ShanghaiCopper,CU,1.0
+SoybeanMeal,M,1.0
+FerrousComplex,RB;HC;I;J;JM,0.2;0.2;0.2;0.2;0.2

@@ -1,0 +1,9 @@
+# Versions tested for this public software release; historical research versions may differ.
+# Install after the editable package: python -m pip install -r requirements-tested.txt
+numpy==2.5.4
+pandas==2.3.3
+scipy==1.18.1
+scikit-learn==1.9.1
+lightgbm==4.7.0
+matplotlib==3.11.2
+pytest==9.2.0

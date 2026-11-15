@@ -1,0 +1,72 @@
+{
+  "result_kind": "Completed native-underlying historical research; not synthetic demo output",
+  "research_revision": "November 2026 native-data follow-up; not a claim of exact reference-index replication",
+  "status": "FULL16_NATIVE_RESEARCH_RUN_COMPLETED",
+  "logical_assets": 16,
+  "actual_legs": 20,
+  "source_search_start": "2018-01-01",
+  "initial_nav_date": "2020-06-03",
+  "first_execution": "2020-06-04",
+  "cutoff": "2023-08-18",
+  "first_execution_rule": "First complete monthly 4th–7th common execution-day phase after all16 assets have 260 native observations; no artificial start-date backfill",
+  "performance": [
+    {
+      "window": "full_native_window",
+      "initial_date": "2020-06-03",
+      "first_return_date": "2020-06-04",
+      "end": "2023-08-18",
+      "observations": 836,
+      "years_elapsed": 3.2060232717316905,
+      "cumulative_return": 0.08369721891092974,
+      "cagr": 0.02538802801214346,
+      "annualized_volatility": 0.0261972492442788,
+      "sharpe_rf_zero": 0.9379984855432206,
+      "maximum_drawdown": 0.03440772076633958,
+      "drawdown_peak_date": "2022-03-30",
+      "drawdown_trough_date": "2022-09-26",
+      "positive_months": 24,
+      "months_including_partial_endpoints": 39,
+      "positive_month_fraction": 0.6153846153846154,
+      "daily_skewness": -0.4517283074707726,
+      "daily_excess_kurtosis": 1.302557926293968
+    },
+    {
+      "window": "fixed_2021_to_cutoff",
+      "initial_date": "2020-12-31",
+      "first_return_date": "2021-01-04",
+      "end": "2023-08-18",
+      "observations": 685,
+      "years_elapsed": 2.628336755646817,
+      "cumulative_return": 0.05700775750946274,
+      "cagr": 0.02131801624983476,
+      "annualized_volatility": 0.026135917900195215,
+      "sharpe_rf_zero": 0.793475753240962,
+      "maximum_drawdown": 0.0344077207663398,
+      "drawdown_peak_date": "2022-03-30",
+      "drawdown_trough_date": "2022-09-26",
+      "positive_months": 19,
+      "months_including_partial_endpoints": 32,
+      "positive_month_fraction": 0.59375,
+      "daily_skewness": -0.4705955625814984,
+      "daily_excess_kurtosis": 1.2012592796136903
+    }
+  ],
+  "transaction_cost_one_way": 0.0005,
+  "annual_management_fee": 0.005,
+  "risk_free_assumption": 0,
+  "annualization": 252,
+  "signal_lag_joint_valuation_days": 1,
+  "no_etf_or_other_contract_substitutes": true,
+  "reference_comparison": {
+    "status": "No exact daily reference NAV available; reference report and its values are not redistributed",
+    "sharpe_volatility_mdd_same_period_comparison_available": false
+  },
+  "accounting": "Funded index positions plus CNY cash and actual futures variation margin; no futures notional principal in NAV",
+  "limitations": [
+    "Five equity price indices are funded-model exposures excluding dividends, not traded index futures or ETFs.",
+    "Fractional positions and synchronous end-of-day sizing; integer lots, margin calls, collateral interest and market impact not modeled.",
+    "CNY cash earns zero; FX uses previous observed Fed H.10 mark but historical publication timestamps were not reconstructed.",
+    "Deferred-contract roll rules, ferrous basket weights and unspecified reference details are explicit implementation assumptions.",
+    "836 union-calendar observations across 3.206 calendar years; frozen sqrt252 convention does not equal the observed annual mark frequency."
+  ]
+}

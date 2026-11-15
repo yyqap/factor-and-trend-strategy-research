@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "scope": "Public aggregate historical results, verified code correspondence records, configurations and figures. No original factor/quote/stock-level data.",
+  "verification_records": [
+    "results/task1/portable_code_verification.json",
+    "results/task2/portable_code_verification.json"
+  ],
+  "interpretation": "Historical and synthetic demo outputs are separate. See docs/results_guide.md for code mapping and reproduction boundaries.",
+  "files": [
+    {
+      "path": "results/task1/cv_leaderboard.csv",
+      "sha256": "00ceb532de3e824015ee9560fd5eedc2b62ea007595ad644b5a89ab7121b3021",
+      "bytes": 998,
+      "rows": 18
+    },
+    {
+      "path": "results/task1/factor_attribution.csv",
+      "sha256": "fef8b07135993df1764e7706fc08e10c94ad30031dec8393f2bbc04afc612819",
+      "bytes": 25757,
+      "rows": 48
+    },
+    {
+      "path": "results/task1/industry_bootstrap.csv",
+      "sha256": "f60319b9ea1d93d848f4db8f6f06b41dbe137a25a4e3803d231c61f390f6f905",
+      "bytes": 5680,
+      "rows": 54
+    },
+    {
+      "path": "results/task1/industry_coverage.csv",
+      "sha256": "957adc99653c3703e01614267bdefa3ff28bbc645ad22ea7454853290f4c3cbe",
+      "bytes": 2175,
+      "rows": 49
+    },
+    {
+      "path": "results/task1/industry_inference.csv",
+      "sha256": "ca9de552665a1fcdc6eeb8c7b3672eb11bfd2d90261416717f3a3042e6fcc606",
+      "bytes": 8983,
+      "rows": 54
+    },
+    {
+      "path": "results/task1/industry_monthly_ic.csv",
+      "sha256": "3a1e776e3a9cdf5a9c9cb2d6daaff8fb3d7f5126d16f208986591cc2fbc10c22",
+      "bytes": 28403,
+      "rows": 147
+    },
+    {
+      "path": "results/task1/model_comparison.csv",
+      "sha256": "6828fc961cc5267961e5662008590d88fd26c4d4ce2b8e18e222a6337a9e9871",
+      "bytes": 1047,
+      "rows": 3
+    },
+    {
+      "path": "results/task1/monthly_baseline_nav.csv",
+      "sha256": "e9f2848df7b44c0af6334c4f6cb1146d14c83755e3e1f8cb7b17698caf860f1a",
+      "bytes": 32266,
+      "rows": 600
+    },
+    {
+      "path": "results/task1/monthly_baseline_returns.csv",
+      "sha256": "c3de2847d4873fe8792ce5eaaf0aa7e780e7cb9506d4a34f5fc002c6d28dbdfb",
+      "bytes": 55793,
+      "rows": 588
+    },
+    {
+      "path": "results/task1/portable_code_verification.json",
+      "sha256": "8173702cea7af3a0babf9942e5ea28fa58add1fe3d1981a73d0b78f7178a65e0",
+      "bytes": 4926
+    },
+    {
+      "path": "results/task1/portfolio_metrics.csv",
+      "sha256": "2ad74aa2e1568e18a6f9ab038e55ed909b8b2e283dca7982063fef78dfb51e87",
+      "bytes": 142536,
+      "rows": 192
+    },
+    {
+      "path": "results/task1/summary.json",
+      "sha256": "74f65b1ff90539e8d06333b2c4545ff30946c06a46e81f435ca9677dd16fe337",
+      "bytes": 5397
+    },
+    {
+      "path": "results/task2/monthly_returns.csv",
+      "sha256": "c9a381ab4885728af79076e70c80f7c89806b2257a7760c6e006cc7708282149",
+      "bytes": 2453,
+      "rows": 39
+    },
+    {
+      "path": "results/task2/performance.csv",
+      "sha256": "7ab62bc93fb7dd1b741a834af251151b99602471825885e26a35b3390cc37447",
+      "bytes": 805,
+      "rows": 2
+    },
+    {
+      "path": "results/task2/portable_code_verification.json",
+      "sha256": "b17e6b2274789914b3a5f1e6b7dda2e0e2a3d906c601790f6f03779d4b660ac7",
+      "bytes": 6850
+    },
+    {
+      "path": "results/task2/strategy_nav.csv",
+      "sha256": "2bb8a5e325a75d807fcd23874ea6403985300dd1feeb2f0a707a1b116c87100d",
+      "bytes": 64757,
+      "rows": 837
+    },
+    {
+      "path": "results/task2/summary.json",
+      "sha256": "31dd56acf8124ea88210165e7c89bec0367a388aaffd4f28f69c9b98b406c872",
+      "bytes": 3394
+    },
+    {
+      "path": "results/task2/universe.csv",
+      "sha256": "6a3797bfc48fc712a953ac1a6666d24a9963672faa552c3b8fe7493944d2e2e6",
+      "bytes": 336,
+      "rows": 16
+    },
+    {
+      "path": "results/task2/verification_summary.json",
+      "sha256": "08581e3ab31bc79c491caec4a0d992ec1804b598b319cf4b5f21d0d0022faa5a",
+      "bytes": 920
+    },
+    {
+      "path": "results/task2/yearly_returns.csv",
+      "sha256": "4e703e1928217f5365ef21112e9ff31b47913da9053fb856c41c9a5dcb51ee19",
+      "bytes": 307,
+      "rows": 4
+    },
+    {
+      "path": "configs/task1.json",
+      "sha256": "e7cd053bb3da998911d52c94e41547552f823aadb5acc426ade3eeb84af8ac70",
+      "bytes": 804
+    },
+    {
+      "path": "configs/task2.json",
+      "sha256": "eaf9e57b7ca5c76f2ebad21b09de39ba0e8bae9f2ace47848183631c68d8bab5",
+      "bytes": 1474
+    },
+    {
+      "path": "docs/figures/task1_model_comparison.png",
+      "sha256": "144b10fb43a753b88c5ac545bcef54d140778db85e3c8a2826a77ce52a574a1c",
+      "bytes": 190016
+    },
+    {
+      "path": "docs/figures/task1_portfolio_tradeoffs.png",
+      "sha256": "993ab03b1e8336bcea26dad793a0b48106178b774d4a7f720cae429e53128bd8",
+      "bytes": 136478
+    },
+    {
+      "path": "docs/figures/task2_native_nav.png",
+      "sha256": "1d942e566704074b4257e8a15f2db510e1ff6b633481c8fb380bce424eca071a",
+      "bytes": 252307
+    }
+  ]
+}

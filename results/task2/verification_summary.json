@@ -1,0 +1,22 @@
+{
+  "reporting_reconciliation_passed": true,
+  "method": "Independent csv/math/statistics reporting reconciliation; no strategy rerun",
+  "checks": {
+    "checks_passed": true,
+    "native_VM_recomputed_from_prior_quantities": true,
+    "funded_PnL_recomputed_from_prior_units": true,
+    "cash_plus_funded_equals_NAV": true,
+    "futures_notional_not_in_NAV": true,
+    "net_NAV_equals_compounded_daily_returns": true,
+    "actual_trade_costs_reconcile": true,
+    "trade_notionals_recomputed_from_units_prices_point_values_FX": true,
+    "funded_and_futures_end_positions_recomputed_from_trades": true,
+    "management_fees_recomputed_from_elapsed_calendar_days": true
+  },
+  "daily_accounting_count": 836,
+  "logical_assets": 16,
+  "actual_legs": 20,
+  "source_cutoff_violations": 0,
+  "maximum_reported_accounting_error_cny": 3.1871683070505696e-10,
+  "no_public_underlying_data_or_private_source_manifests": true
+}

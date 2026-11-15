@@ -1,0 +1,131 @@
+{
+  "status": "PASS",
+  "scope": "Portable implementation checked locally against the original historical inputs and verified aggregate archives; no source data or individual predictions redistributed.",
+  "input_dimensions": {
+    "rows": 319441,
+    "historical_stock_union": 3540,
+    "signal_months": 162,
+    "candidate_features": 70
+  },
+  "model_validation": {
+    "configurations": 18,
+    "validation_months": 66,
+    "later_months": 49,
+    "prediction_key_count_checked": 382953,
+    "all_target_and_training_cutoffs_match": true,
+    "selected_family": "lightgbm",
+    "selected_parameters": {
+      "ridge": {
+        "lambda": 1.0
+      },
+      "logistic": {
+        "C": 0.01
+      },
+      "lightgbm": {
+        "min_child_samples": 1000,
+        "n_estimators": 100,
+        "num_leaves": 7
+      }
+    },
+    "maximum_cv_mean_ic_difference": 0.0,
+    "maximum_individual_prediction_difference": 2.1994628340848976e-11,
+    "historical_mean_rank_ic": [
+      {
+        "model": "lightgbm",
+        "months": 49,
+        "mean_rank_ic": 0.13991286634302538,
+        "positive_ic_month_fraction": 0.8367346938775511
+      },
+      {
+        "model": "logistic",
+        "months": 49,
+        "mean_rank_ic": 0.13119467588229752,
+        "positive_ic_month_fraction": 0.9591836734693877
+      },
+      {
+        "model": "ridge",
+        "months": 49,
+        "mean_rank_ic": 0.1281291567383404,
+        "positive_ic_month_fraction": 0.9591836734693877
+      }
+    ]
+  },
+  "portfolio_validation": {
+    "unique_configurations": 48,
+    "configuration_fee_cases": 192,
+    "fee_bps": [
+      0,
+      5,
+      10,
+      20
+    ],
+    "metrics_checked": [
+      "CAGR_actual_days",
+      "Sharpe",
+      "monthly_boundary_NAV_MDD",
+      "annual_volatility",
+      "IR",
+      "two_sided_target_turnover",
+      "final_NAV",
+      "tracking_error",
+      "positive_active_month_fraction",
+      "mean_stock_exposure"
+    ],
+    "maximum_absolute_difference": 1.0658141036401503e-14,
+    "selection_flags_recomputed": false
+  },
+  "factor_attribution_validation": {
+    "net_fee_bps": 10,
+    "factor_models": [
+      "China_FF3",
+      "China_FF5"
+    ],
+    "regressions_checked": 96,
+    "hac_lag": 6,
+    "quantities_checked": [
+      "annual_arithmetic_alpha",
+      "normal95_alpha_interval",
+      "all_factor_loadings",
+      "alpha_HAC_statistic"
+    ],
+    "maximum_absolute_difference": 7.993605777301127e-15
+  },
+  "industry_validation": {
+    "monthly_model_group_size_cases": 441,
+    "minimum_groups": [
+      5,
+      2,
+      10
+    ],
+    "six_ic_metrics_checked": [
+      "raw_rank_ic_same_sample",
+      "industry_adjusted_rank_ic",
+      "industry_partial_spearman",
+      "return_only_group_adjusted_ic",
+      "within_industry_n_weighted_ic",
+      "industry_adjusted_minus_raw"
+    ],
+    "maximum_ic_difference": 2.220446049250313e-16,
+    "hac_and_bootstrap_maximum_difference": 8.881784197001252e-15
+  },
+  "boundaries": [
+    "All 48 portfolio paths were assembled from helper APIs for this local parity check; the baseline CLI itself orchestrates six stock books only.",
+    "Archived portfolio/regime development-selection flags came from separate causal nested historical development and are not reselected by this portable CLI.",
+    "Absolute returns depend on matching arithmetic-relative targets, benchmark horizons and the declared RF proxy.",
+    "Monthly wealth observations do not recover daily drawdown; target-weight costs omit drift and execution constraints.",
+    "These historical outcomes were previously inspected, not a new untouched holdout.",
+    "Small floating-point differences across library versions are permitted; no bitwise identity is promised."
+  ],
+  "verified_portable_code_sha256": {
+    "src/factor_trend_research/task1/__init__.py": "d5839c56a0adc7007cadc6e613a72ef4486c524d51530dffd2bdbdc302ddaaa7",
+    "src/factor_trend_research/task1/__main__.py": "635516b9af7d33dd29710e73806accee23aa10e8a30a84802b637e8210bde3ea",
+    "src/factor_trend_research/task1/data.py": "f2e33c0cf8ff4205036d872cc55479f7e41a9ad863824a4cf24eab7016abb4c6",
+    "src/factor_trend_research/task1/diagnostics.py": "3ec7fe7eeac7a77193650d9085c2f0ad6761d15cc88c5d397411b0b483c479a4",
+    "src/factor_trend_research/task1/features.py": "0dac13a3edb72df9f503d01885fcf410dfd6673138414124355d46b86e2d2de9",
+    "src/factor_trend_research/task1/models.py": "0914cdf6c2791cd70e2dafcb8ab39aa53b661386c96c366260b3c57fb601f145",
+    "src/factor_trend_research/task1/portfolio.py": "a363d1bc7bef3ffc34363ca3567083a60ed4a569479e99a1cbf622c36a110dfd",
+    "src/factor_trend_research/task1/regimes.py": "39e20dd0bd494975481e801585996c262cda238a3b2e2236bde1ee57094c5647",
+    "src/factor_trend_research/task1/research.py": "3ceee461ce13bc5e3999a5e9c3316ed06d33b9be8a04b33f8b725e01055644f1",
+    "configs/task1.json": "e7cd053bb3da998911d52c94e41547552f823aadb5acc426ade3eeb84af8ac70"
+  }
+}
